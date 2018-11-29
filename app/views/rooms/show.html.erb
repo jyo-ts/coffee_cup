@@ -1,0 +1,50 @@
+<br>
+<div class="row">
+  <div class="col-xs-3 text-center">
+    <h4><%= @room.name %></h4>
+    <h4><small><%= @room.explain %></small></h4>
+    <hr>
+    <h4>参加者</h4>
+    <% @entries.each do |e| %>
+      <h5><strong><a href="/users/<%= e.user.id %>"><%= e.user.family_name %> <%= e.user.first_name %>さん</a></strong></h5>
+    <% end %>
+    <hr>
+    <a href="/rooms/<%= @room.id %>/edit" class="btn btn-success">情報を編集する</a>
+  </div>
+  <div class="col-xs-9">
+    <% if @messages.present? %>
+      <%= @messages.each do |m| %>
+        <% if m.user_id == current_user.id %>
+          <h4 class="text-right">
+            <p class="alert alert-success">
+              <%= m.content %>
+              <br><br>
+              <small><strong><a href="/users/<%= m.user_id %>"><%= m.user.family_name %> <%= m.user.first_name %>さん <%= image_tag m.user.image.url(:thumb) %></a></strong></small>
+            </p>
+          </h4>
+        <% else %>
+          <h4 class="text-left">
+            <p class="alert alert-info">
+              <%= m.content %>
+              <br><br>
+              <small><strong><a href="/users/<%= m.user_id %>"><%= image_tag m.user.image.url(:thumb)%> <%= m.user.family_name %> <%= m.user.first_name %>さん</a></strong></small>
+            </p>
+          </h4>
+        <% end %>
+      <% end %>
+        <% else %>
+          <br>
+          <h3 class="text-center">メッセージはまだありません</h3>
+          <br>
+    <% end %>
+     <hr>
+    <%= form_for @message do |f| %>
+      <%= f.text_field :content, :class => "form-control myform", :placeholder => "メッセージを入力して下さい" %>
+      <%= f.hidden_field :room_id, :value => @room.id %>
+      <br>
+        <div class="text-center">
+          <%= f.submit "投稿する", :class => "btn btn-primary" %>
+        </div>
+    <% end %>
+  </div>
+</div>

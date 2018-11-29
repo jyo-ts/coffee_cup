@@ -1,0 +1,25 @@
+// Place all the styles related to the welcome controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.main-page{
+  margin-top:50px;
+}
+
+.my-form{
+  width:500px;
+}
+
+.header-image{
+  background-image: url(/assets/header12.jpg);
+  height:600px;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+}
+
+.header-content{
+  font-size:75px;
+  padding-top:150px;
+}

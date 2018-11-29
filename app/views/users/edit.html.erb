@@ -1,0 +1,25 @@
+<h1>ユーザー情報を編集する</h1>
+<hr>
+<%= form_for @user do |f| %>
+  <p>プロフィール画像</p>
+  <% if @user.image.present? %>
+    <%= image_tag @user.image.url(:medium) %>
+    <br><br>
+  <% else %>
+    <h4>画像はまだ登録されていません</h4>
+  <% end %>
+  <%= f.file_field :image, :class => "form-control my-form" %>
+  <br>
+  <p>名字</p>
+  <%= f.text_field :family_name, :class => "form-control my-form" %>
+  <p>名前</p>
+  <%= f.text_field :first_name, :class => "form-control my-form" %>
+  <p>年齢</p>
+  <%= f.number_field :age, :class => "form-control my-form" %>
+  <p>自己紹介</p>
+  <%= f.text_area :self_introduction, :class => "form-control my-form" %>
+  <hr>
+  <%= f.submit "登録する", :class => "btn btn-primary" %>
+<% end %>
+<hr>
+<a href="/users/<%= @user.id %>" class="btn btn-info">ユーザー情報に戻る</a>

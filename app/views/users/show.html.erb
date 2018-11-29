@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-xs-6">
+<h1>ユーザー情報</h1>
+<hr>
+<% if @user.image.present? %>
+  <%= image_tag @user.image.url(:medium) %>
+  <br><br>
+<% else %>
+  <h4>画像はありません</h4>
+<% end %>
+<p>名前：<%= @user.family_name %><%= @user.first_name %>さん（<%= @user.age %>歳）</p>
+<p>自己紹介：<%= @user.self_introduction %></p>
+<br>
+  <% if @user.id == current_user.id %>
+    <p><a href="/users/<%= @user.id %>/edit" class="btn btn-success">ユーザー情報を編集する</a>
+  <% else %>
+    <%= form_for @room do |f| %>
+      <%= fields_for @entry do |e| %>
+        <%= e.hidden_field :user_id, :value => @user.id %>
+      <% end %>
+      <%= f.submit "チャットを始める", :class => "btn btn-warning" %>
+    <% end %>
+  <% end %>
+  </div>
+    <% if @user.id == current_user.id %>
+      <div class="col-xs-6">
+        <h1>チャット一覧</h1>
+        <hr>
+        <% @entries.each do |e| %>
+          <% logger.debug("=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~entry user_id = #{e.user_id} ,,, room_id = #{e.room_id}") %>
+          <p><a href="/rooms/<%= e.room.id %>"><strong><%= e.room.name %></strong></a></p>
+          <%= link_to("削除", "/rooms/#{e.room.id}", {method: "delete"}) %>
+          <hr>
+        <% end %>
+        <a href="/rooms" class="btn btn-info">チャット一覧を見る</a>
+      </div>
+    <% end %>
+</div>
+  <hr>
+<p><a href="/users" class="btn btn-primary">ユーザー一覧に戻る</a></p>

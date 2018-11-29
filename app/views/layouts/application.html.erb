@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MessageApp</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+  <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        <a href="/" class="navbar-brand">Message-app</a>
+      </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+        <% if user_signed_in? %>
+          <li><a href="/users">会員一覧</a></li>
+          <li><a fref="/users/<%= current_user.id %>"><%= current_user.family_name %><%= current_user.first_name %>さん</a></li>
+          <li><%= link_to "ログアウト", destroy_user_session_path, :method => :delete %></li>
+        <% else %>
+          <li><a href="/users/sign_up">登録する</a></li>
+          <li><a href="/users/sign_in">ログインする</a></li>
+        <% end %>
+          </ul>
+        </div>
+    </div>
+  </nav>
+
+<div class="container main-page">
+  <% if notice %>
+    <br>
+    <p class="alert alert-success"><%= notice %></p>
+  <% end %>
+  <% if alert %>
+    <br>
+    <p class="alert alert-danger"><%= alert %></p>
+  <% end %>
+  <%= yield %>
+</div>
+  </body>
+</html>
